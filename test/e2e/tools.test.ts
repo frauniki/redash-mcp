@@ -57,14 +57,19 @@ describe("MCP Server E2E", () => {
     const toolNames = result.tools.map((t) => t.name).sort();
     expect(toolNames).toEqual([
       "add_widget",
+      "archive_dashboard",
       "create_dashboard",
       "create_query",
       "create_visualization",
+      "delete_widget",
       "execute_query",
+      "get_dashboard",
       "get_query_result",
       "list_data_sources",
       "list_queries",
       "publish_dashboard",
+      "update_dashboard",
+      "update_widget",
     ]);
   });
 
@@ -209,6 +214,30 @@ describe("MCP Server E2E", () => {
     });
   });
 
+  describe("get_dashboard", () => {
+    it("should return dashboard with widgets", async () => {
+      const result = await mcpClient.callTool({
+        name: "get_dashboard",
+        arguments: { dashboard_id: 3 },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("Test Dashboard");
+      expect(text).toContain("Results Table");
+    });
+  });
+
+  describe("update_dashboard", () => {
+    it("should update dashboard name", async () => {
+      const result = await mcpClient.callTool({
+        name: "update_dashboard",
+        arguments: { dashboard_id: 3, name: "Updated Dashboard" },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("Dashboard updated successfully");
+      expect(text).toContain("Updated Dashboard");
+    });
+  });
+
   describe("publish_dashboard", () => {
     it("should publish a dashboard", async () => {
       const result = await mcpClient.callTool({
@@ -218,6 +247,39 @@ describe("MCP Server E2E", () => {
       const text = (result.content as Array<{ type: string; text: string }>)[0].text;
       expect(text).toContain("Dashboard published successfully");
       expect(text).toContain("Draft: false");
+    });
+  });
+
+  describe("archive_dashboard", () => {
+    it("should archive a dashboard", async () => {
+      const result = await mcpClient.callTool({
+        name: "archive_dashboard",
+        arguments: { dashboard_id: 3 },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("Dashboard archived successfully");
+    });
+  });
+
+  describe("update_widget", () => {
+    it("should update a widget", async () => {
+      const result = await mcpClient.callTool({
+        name: "update_widget",
+        arguments: { widget_id: 7, text: "Updated text" },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("Widget updated successfully");
+    });
+  });
+
+  describe("delete_widget", () => {
+    it("should delete a widget", async () => {
+      const result = await mcpClient.callTool({
+        name: "delete_widget",
+        arguments: { widget_id: 7 },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("deleted successfully");
     });
   });
 

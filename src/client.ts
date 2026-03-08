@@ -152,10 +152,41 @@ export class RedashClient {
     return this.request<RedashWidget>("POST", "/api/widgets", params);
   }
 
+  async getDashboard(dashboardId: number): Promise<RedashDashboard> {
+    return this.request<RedashDashboard>("GET", `/api/dashboards/${dashboardId}`);
+  }
+
+  async updateDashboard(
+    dashboardId: number,
+    params: {
+      name?: string;
+      is_draft?: boolean;
+      is_archived?: boolean;
+      tags?: string[];
+      options?: Record<string, unknown>;
+      dashboard_filters_enabled?: boolean;
+    },
+  ): Promise<RedashDashboard> {
+    return this.request<RedashDashboard>("POST", `/api/dashboards/${dashboardId}`, params);
+  }
+
   async publishDashboard(dashboardId: number): Promise<RedashDashboard> {
-    return this.request<RedashDashboard>("POST", `/api/dashboards/${dashboardId}`, {
-      is_draft: false,
-    });
+    return this.updateDashboard(dashboardId, { is_draft: false });
+  }
+
+  async archiveDashboard(dashboardId: number): Promise<RedashDashboard> {
+    return this.request<RedashDashboard>("DELETE", `/api/dashboards/${dashboardId}`);
+  }
+
+  async updateWidget(
+    widgetId: number,
+    params: { text?: string; options?: Record<string, unknown> },
+  ): Promise<RedashWidget> {
+    return this.request<RedashWidget>("POST", `/api/widgets/${widgetId}`, params);
+  }
+
+  async deleteWidget(widgetId: number): Promise<void> {
+    await this.request<void>("DELETE", `/api/widgets/${widgetId}`);
   }
 }
 

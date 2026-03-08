@@ -225,18 +225,74 @@ export function createMockRedashServer(): {
         });
       }
 
-      const dashboardPublishMatch = path.match(/^\/api\/dashboards\/(\d+)$/);
-      if (method === "POST" && dashboardPublishMatch) {
-        return respond(200, {
-          id: parseInt(dashboardPublishMatch[1]),
-          slug: "test-dashboard",
-          name: "Test Dashboard",
-          is_archived: false,
-          is_draft: parsedBody.is_draft ?? false,
-          widgets: [],
-          created_at: "2024-01-01T00:00:00Z",
-          updated_at: "2024-01-01T00:00:00Z",
-        });
+      const dashboardIdMatch = path.match(/^\/api\/dashboards\/(\d+)$/);
+      if (dashboardIdMatch) {
+        const id = parseInt(dashboardIdMatch[1]);
+        if (method === "GET") {
+          return respond(200, {
+            id,
+            slug: "test-dashboard",
+            name: "Test Dashboard",
+            is_archived: false,
+            is_draft: true,
+            widgets: [
+              {
+                id: 7,
+                dashboard_id: id,
+                visualization_id: 5,
+                visualization: { id: 5, type: "TABLE", name: "Results Table" },
+                text: "",
+                width: 1,
+                options: {},
+              },
+            ],
+            created_at: "2024-01-01T00:00:00Z",
+            updated_at: "2024-01-01T00:00:00Z",
+          });
+        }
+        if (method === "POST") {
+          return respond(200, {
+            id,
+            slug: "test-dashboard",
+            name: parsedBody.name ?? "Test Dashboard",
+            is_archived: parsedBody.is_archived ?? false,
+            is_draft: parsedBody.is_draft ?? false,
+            tags: parsedBody.tags ?? [],
+            widgets: [],
+            created_at: "2024-01-01T00:00:00Z",
+            updated_at: "2024-01-01T00:00:00Z",
+          });
+        }
+        if (method === "DELETE") {
+          return respond(200, {
+            id,
+            slug: "test-dashboard",
+            name: "Test Dashboard",
+            is_archived: true,
+            is_draft: false,
+            widgets: [],
+            created_at: "2024-01-01T00:00:00Z",
+            updated_at: "2024-01-01T00:00:00Z",
+          });
+        }
+      }
+
+      const widgetIdMatch = path.match(/^\/api\/widgets\/(\d+)$/);
+      if (widgetIdMatch) {
+        const id = parseInt(widgetIdMatch[1]);
+        if (method === "POST") {
+          return respond(200, {
+            id,
+            dashboard_id: 3,
+            visualization_id: null,
+            text: parsedBody.text ?? "",
+            width: 1,
+            options: parsedBody.options ?? {},
+          });
+        }
+        if (method === "DELETE") {
+          return respond(200, null);
+        }
       }
 
       respond(404, { message: "Not found" });

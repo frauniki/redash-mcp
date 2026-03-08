@@ -129,10 +129,47 @@ describe("RedashClient", () => {
     });
   });
 
+  describe("getDashboard", () => {
+    it("should return dashboard with widgets", async () => {
+      const result = await client.getDashboard(3);
+      expect(result.id).toBe(3);
+      expect(result.name).toBe("Test Dashboard");
+      expect(result.widgets).toHaveLength(1);
+    });
+  });
+
+  describe("updateDashboard", () => {
+    it("should update dashboard", async () => {
+      const result = await client.updateDashboard(3, { name: "Updated" });
+      expect(result.name).toBe("Updated");
+    });
+  });
+
   describe("publishDashboard", () => {
     it("should publish a dashboard", async () => {
       const result = await client.publishDashboard(3);
       expect(result.is_draft).toBe(false);
+    });
+  });
+
+  describe("archiveDashboard", () => {
+    it("should archive a dashboard", async () => {
+      const result = await client.archiveDashboard(3);
+      expect(result.is_archived).toBe(true);
+    });
+  });
+
+  describe("updateWidget", () => {
+    it("should update a widget", async () => {
+      const result = await client.updateWidget(7, { text: "Updated" });
+      expect(result.id).toBe(7);
+      expect(result.text).toBe("Updated");
+    });
+  });
+
+  describe("deleteWidget", () => {
+    it("should delete a widget", async () => {
+      await expect(client.deleteWidget(7)).resolves.toBeUndefined();
     });
   });
 
