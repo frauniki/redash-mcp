@@ -8,13 +8,21 @@ MCP Server for [Redash](https://redash.io/) — execute queries, create visualiz
 | ---------------------- | ------------------------------------------------- |
 | `list_data_sources`    | List all available data sources                   |
 | `list_queries`         | Search and list saved queries                     |
+| `get_query`            | Get a query with visualizations                   |
 | `get_query_result`     | Get the latest result of a saved query            |
 | `create_query`         | Create a new query                                |
+| `update_query`         | Update an existing query                          |
+| `archive_query`        | Archive (delete) a query                          |
 | `execute_query`        | Execute SQL and return results (with job polling) |
 | `create_visualization` | Create a visualization for a query                |
 | `create_dashboard`     | Create a new dashboard                            |
-| `add_widget`           | Add a widget to a dashboard                       |
+| `get_dashboard`        | Get a dashboard with its widgets                  |
+| `update_dashboard`     | Update a dashboard (name, tags, options, filters) |
 | `publish_dashboard`    | Publish a draft dashboard                         |
+| `archive_dashboard`    | Archive (delete) a dashboard                      |
+| `add_widget`           | Add a widget to a dashboard                       |
+| `update_widget`        | Update a widget (text or options)                 |
+| `delete_widget`        | Delete a widget from a dashboard                  |
 
 ## Setup
 
@@ -39,7 +47,7 @@ Add to `~/.claude.json`:
   "mcpServers": {
     "redash": {
       "command": "npx",
-      "args": ["redash-mcp"],
+      "args": ["@frauniki/redash-mcp"],
       "env": {
         "REDASH_URL": "https://redash.example.com",
         "REDASH_API_KEY": "your-api-key"
