@@ -1,6 +1,7 @@
-import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { RedashClient, formatQueryResult } from "../client.js";
+import { z } from "zod";
+
+import { RedashClient, formatQueryResult, getErrorMessage } from "../client.js";
 
 const POLL_INTERVAL_MS = 1000;
 const POLL_TIMEOUT_MS = 60000;
@@ -96,7 +97,7 @@ export function registerExecuteTools(server: McpServer, client: RedashClient): v
         };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }

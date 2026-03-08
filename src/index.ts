@@ -2,12 +2,13 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+
 import { RedashClient } from "./client.js";
-import { registerDataSourceTools } from "./tools/data-sources.js";
-import { registerQueryTools } from "./tools/queries.js";
-import { registerExecuteTools } from "./tools/execute.js";
-import { registerVisualizationTools } from "./tools/visualizations.js";
 import { registerDashboardTools } from "./tools/dashboards.js";
+import { registerDataSourceTools } from "./tools/data-sources.js";
+import { registerExecuteTools } from "./tools/execute.js";
+import { registerQueryTools } from "./tools/queries.js";
+import { registerVisualizationTools } from "./tools/visualizations.js";
 
 function main(): void {
   const redashUrl = process.env.REDASH_URL;

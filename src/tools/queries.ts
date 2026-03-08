@@ -1,6 +1,7 @@
-import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { RedashClient, formatQueryResult } from "../client.js";
+import { z } from "zod";
+
+import { RedashClient, formatQueryResult, getErrorMessage } from "../client.js";
 
 export function registerQueryTools(server: McpServer, client: RedashClient): void {
   server.tool(
@@ -23,7 +24,7 @@ export function registerQueryTools(server: McpServer, client: RedashClient): voi
         return { content: [{ type: "text", text }] };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }
@@ -55,7 +56,7 @@ export function registerQueryTools(server: McpServer, client: RedashClient): voi
         return { content: [{ type: "text", text }] };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }
@@ -75,7 +76,7 @@ export function registerQueryTools(server: McpServer, client: RedashClient): voi
         return { content: [{ type: "text", text }] };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }
@@ -109,7 +110,7 @@ export function registerQueryTools(server: McpServer, client: RedashClient): voi
         };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }
@@ -141,7 +142,7 @@ export function registerQueryTools(server: McpServer, client: RedashClient): voi
         };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }
@@ -162,7 +163,7 @@ export function registerQueryTools(server: McpServer, client: RedashClient): voi
         };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }

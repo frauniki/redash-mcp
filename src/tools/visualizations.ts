@@ -1,6 +1,7 @@
-import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { RedashClient } from "../client.js";
+import { z } from "zod";
+
+import { RedashClient, getErrorMessage } from "../client.js";
 
 export function registerVisualizationTools(server: McpServer, client: RedashClient): void {
   server.tool(
@@ -33,7 +34,7 @@ export function registerVisualizationTools(server: McpServer, client: RedashClie
         };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }
@@ -63,7 +64,7 @@ export function registerVisualizationTools(server: McpServer, client: RedashClie
         };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }
@@ -86,7 +87,7 @@ export function registerVisualizationTools(server: McpServer, client: RedashClie
         };
       } catch (error) {
         return {
-          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
           isError: true,
         };
       }

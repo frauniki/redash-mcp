@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+
 import { RedashClient, RedashClientError, formatQueryResult } from "../src/client.js";
 import { createMockRedashServer } from "./helpers/mock-server.js";
 

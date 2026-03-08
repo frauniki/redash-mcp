@@ -1,13 +1,13 @@
 import type {
+  RedashDashboard,
   RedashDataSource,
+  RedashJob,
+  RedashListResponse,
   RedashQuery,
   RedashQueryResult,
-  RedashJob,
-  RedashVisualization,
-  RedashDashboard,
-  RedashWidget,
-  RedashListResponse,
   RedashQueryResultData,
+  RedashVisualization,
+  RedashWidget,
 } from "./types.js";
 
 export class RedashClientError extends Error {
@@ -231,6 +231,10 @@ export class RedashClient {
   async deleteWidget(widgetId: number): Promise<void> {
     await this.request<void>("DELETE", `/api/widgets/${widgetId}`);
   }
+}
+
+export function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
 }
 
 const MAX_ROWS = 100;

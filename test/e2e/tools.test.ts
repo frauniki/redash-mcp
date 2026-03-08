@@ -1,13 +1,14 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach } from "vitest";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+
 import { RedashClient } from "../../src/client.js";
-import { registerDataSourceTools } from "../../src/tools/data-sources.js";
-import { registerQueryTools } from "../../src/tools/queries.js";
-import { registerExecuteTools } from "../../src/tools/execute.js";
-import { registerVisualizationTools } from "../../src/tools/visualizations.js";
 import { registerDashboardTools } from "../../src/tools/dashboards.js";
+import { registerDataSourceTools } from "../../src/tools/data-sources.js";
+import { registerExecuteTools } from "../../src/tools/execute.js";
+import { registerQueryTools } from "../../src/tools/queries.js";
+import { registerVisualizationTools } from "../../src/tools/visualizations.js";
 import { createMockRedashServer } from "../helpers/mock-server.js";
 
 describe("MCP Server E2E", () => {

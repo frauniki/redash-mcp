@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { RedashClient } from "../client.js";
+
+import { RedashClient, getErrorMessage } from "../client.js";
 
 export function registerDataSourceTools(server: McpServer, client: RedashClient): void {
   server.tool("list_data_sources", "List all available Redash data sources", async () => {
@@ -11,7 +12,7 @@ export function registerDataSourceTools(server: McpServer, client: RedashClient)
       };
     } catch (error) {
       return {
-        content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+        content: [{ type: "text", text: `Error: ${getErrorMessage(error)}` }],
         isError: true,
       };
     }
