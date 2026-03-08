@@ -20,7 +20,7 @@ MCP Server for [Redash](https://redash.io/) — execute queries, create visualiz
 
 ### Prerequisites
 
-- Node.js >= 18
+- Node.js >= 20
 - pnpm
 - A Redash instance with an API key
 
