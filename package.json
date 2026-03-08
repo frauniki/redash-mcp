@@ -24,6 +24,10 @@
     "mcp",
     "redash"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frauniki/redash-mcp"
+  },
   "author": "",
   "license": "ISC",
   "publishConfig": {
