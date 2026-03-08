@@ -1,6 +1,6 @@
 {
   "name": "@frauniki/redash-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP Server for Redash API",
   "type": "module",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && chmod +x dist/index.js",
     "prepublishOnly": "pnpm build",
     "test": "vitest run",
     "test:watch": "vitest",
