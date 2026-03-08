@@ -29,4 +29,10 @@ jobs:
 
       - run: pnpm test
 
-      - run: pnpm publish --access public --no-git-checks --provenance
+      - name: Publish
+        run: |
+          if [ "${{ github.event.release.prerelease }}" = "true" ]; then
+            pnpm publish --access public --no-git-checks --provenance --tag alpha
+          else
+            pnpm publish --access public --no-git-checks --provenance
+          fi
