@@ -58,17 +58,20 @@ describe("MCP Server E2E", () => {
     expect(toolNames).toEqual([
       "add_widget",
       "archive_dashboard",
+      "archive_query",
       "create_dashboard",
       "create_query",
       "create_visualization",
       "delete_widget",
       "execute_query",
       "get_dashboard",
+      "get_query",
       "get_query_result",
       "list_data_sources",
       "list_queries",
       "publish_dashboard",
       "update_dashboard",
+      "update_query",
       "update_widget",
     ]);
   });
@@ -130,6 +133,42 @@ describe("MCP Server E2E", () => {
       const text = (result.content as Array<{ type: string; text: string }>)[0].text;
       expect(text).toContain("Query created successfully");
       expect(text).toContain("ID: 10");
+    });
+  });
+
+  describe("get_query", () => {
+    it("should return query with visualizations", async () => {
+      const result = await mcpClient.callTool({
+        name: "get_query",
+        arguments: { query_id: 1 },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("User Count");
+      expect(text).toContain("SELECT count(*)");
+      expect(text).toContain("Table");
+    });
+  });
+
+  describe("update_query", () => {
+    it("should update a query", async () => {
+      const result = await mcpClient.callTool({
+        name: "update_query",
+        arguments: { query_id: 1, name: "Updated Query" },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("Query updated successfully");
+      expect(text).toContain("Updated Query");
+    });
+  });
+
+  describe("archive_query", () => {
+    it("should archive a query", async () => {
+      const result = await mcpClient.callTool({
+        name: "archive_query",
+        arguments: { query_id: 1 },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("archived successfully");
     });
   });
 

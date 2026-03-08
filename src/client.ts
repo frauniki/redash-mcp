@@ -92,6 +92,10 @@ export class RedashClient {
     return response.query_result;
   }
 
+  async getQuery(queryId: number): Promise<RedashQuery> {
+    return this.request<RedashQuery>("GET", `/api/queries/${queryId}`);
+  }
+
   async createQuery(params: {
     name: string;
     query: string;
@@ -99,6 +103,25 @@ export class RedashClient {
     description?: string;
   }): Promise<RedashQuery> {
     return this.request<RedashQuery>("POST", "/api/queries", params);
+  }
+
+  async updateQuery(
+    queryId: number,
+    params: {
+      name?: string;
+      query?: string;
+      description?: string;
+      data_source_id?: number;
+      schedule?: Record<string, unknown> | null;
+      tags?: string[];
+      options?: Record<string, unknown>;
+    },
+  ): Promise<RedashQuery> {
+    return this.request<RedashQuery>("POST", `/api/queries/${queryId}`, params);
+  }
+
+  async archiveQuery(queryId: number): Promise<void> {
+    await this.request<void>("DELETE", `/api/queries/${queryId}`);
   }
 
   async executeQuery(

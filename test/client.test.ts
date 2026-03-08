@@ -75,6 +75,29 @@ describe("RedashClient", () => {
     });
   });
 
+  describe("getQuery", () => {
+    it("should return a query with visualizations", async () => {
+      const result = await client.getQuery(1);
+      expect(result.id).toBe(1);
+      expect(result.name).toBe("User Count");
+      expect(result.visualizations).toHaveLength(1);
+    });
+  });
+
+  describe("updateQuery", () => {
+    it("should update a query", async () => {
+      const result = await client.updateQuery(1, { name: "Updated" });
+      expect(result.id).toBe(1);
+      expect(result.name).toBe("Updated");
+    });
+  });
+
+  describe("archiveQuery", () => {
+    it("should archive a query", async () => {
+      await expect(client.archiveQuery(1)).resolves.toBeUndefined();
+    });
+  });
+
   describe("executeQuery", () => {
     it("should return a job", async () => {
       const result = await client.executeQuery(1, "SELECT 1");

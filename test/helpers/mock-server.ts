@@ -117,6 +117,42 @@ export function createMockRedashServer(): {
         return respond(200, { query_result: queryResult });
       }
 
+      const queryIdMatch = path.match(/^\/api\/queries\/(\d+)$/);
+      if (queryIdMatch) {
+        const id = parseInt(queryIdMatch[1]);
+        if (method === "GET") {
+          return respond(200, {
+            id,
+            name: "User Count",
+            description: "Count all users",
+            query: "SELECT count(*) FROM users",
+            data_source_id: 1,
+            is_archived: false,
+            is_draft: false,
+            visualizations: [{ id: 1, type: "TABLE", name: "Table", query_id: id, options: {} }],
+            created_at: "2024-01-01T00:00:00Z",
+            updated_at: "2024-01-01T00:00:00Z",
+          });
+        }
+        if (method === "POST") {
+          return respond(200, {
+            id,
+            name: parsedBody.name ?? "User Count",
+            description: parsedBody.description ?? "Count all users",
+            query: parsedBody.query ?? "SELECT count(*) FROM users",
+            data_source_id: parsedBody.data_source_id ?? 1,
+            is_archived: false,
+            is_draft: false,
+            tags: parsedBody.tags ?? [],
+            created_at: "2024-01-01T00:00:00Z",
+            updated_at: "2024-01-01T00:00:00Z",
+          });
+        }
+        if (method === "DELETE") {
+          return respond(200, null);
+        }
+      }
+
       if (method === "POST" && path === "/api/query_results") {
         // Return a job that requires polling
         return respond(200, {
