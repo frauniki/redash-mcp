@@ -122,7 +122,11 @@ export class RedashClient {
   }
 
   async getQueryResultById(resultId: number): Promise<RedashQueryResult> {
-    return this.request<RedashQueryResult>("GET", `/api/query_results/${resultId}`);
+    const response = await this.request<{ query_result: RedashQueryResult }>(
+      "GET",
+      `/api/query_results/${resultId}`,
+    );
+    return response.query_result;
   }
 
   async createVisualization(params: {

@@ -1,6 +1,6 @@
 {
   "name": "@frauniki/redash-mcp",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "MCP Server for Redash API",
   "type": "module",
   "main": "dist/index.js",

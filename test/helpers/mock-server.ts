@@ -172,7 +172,7 @@ export function createMockRedashServer(): {
 
       const queryResultByIdMatch = path.match(/^\/api\/query_results\/(\d+)$/);
       if (method === "GET" && queryResultByIdMatch) {
-        return respond(200, queryResult);
+        return respond(200, { query_result: queryResult });
       }
 
       if (method === "POST" && path === "/api/queries") {
