@@ -15,6 +15,8 @@ MCP Server for [Redash](https://redash.io/) — execute queries, create visualiz
 | `archive_query`        | Archive (delete) a query                          |
 | `execute_query`        | Execute SQL and return results (with job polling) |
 | `create_visualization` | Create a visualization for a query                |
+| `update_visualization` | Update a visualization                            |
+| `delete_visualization` | Delete a visualization                            |
 | `create_dashboard`     | Create a new dashboard                            |
 | `get_dashboard`        | Get a dashboard with its widgets                  |
 | `update_dashboard`     | Update a dashboard (name, tags, options, filters) |

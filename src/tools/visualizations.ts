@@ -39,4 +39,57 @@ export function registerVisualizationTools(server: McpServer, client: RedashClie
       }
     },
   );
+
+  server.tool(
+    "update_visualization",
+    "Update a Redash visualization",
+    {
+      visualization_id: z.number().describe("ID of the visualization"),
+      name: z.string().optional().describe("New name"),
+      description: z.string().optional().describe("New description"),
+      type: z.string().optional().describe("New visualization type"),
+      options: z.record(z.string(), z.unknown()).optional().describe("New visualization options"),
+    },
+    async ({ visualization_id, ...params }) => {
+      try {
+        const result = await client.updateVisualization(visualization_id, params);
+        return {
+          content: [
+            {
+              type: "text",
+              text: `Visualization updated successfully.\nID: ${result.id}\nName: ${result.name}\nType: ${result.type}`,
+            },
+          ],
+        };
+      } catch (error) {
+        return {
+          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          isError: true,
+        };
+      }
+    },
+  );
+
+  server.tool(
+    "delete_visualization",
+    "Delete a Redash visualization",
+    {
+      visualization_id: z.number().describe("ID of the visualization to delete"),
+    },
+    async ({ visualization_id }) => {
+      try {
+        await client.deleteVisualization(visualization_id);
+        return {
+          content: [
+            { type: "text", text: `Visualization ${visualization_id} deleted successfully.` },
+          ],
+        };
+      } catch (error) {
+        return {
+          content: [{ type: "text", text: `Error: ${(error as Error).message}` }],
+          isError: true,
+        };
+      }
+    },
+  );
 }

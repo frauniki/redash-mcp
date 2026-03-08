@@ -62,6 +62,7 @@ describe("MCP Server E2E", () => {
       "create_dashboard",
       "create_query",
       "create_visualization",
+      "delete_visualization",
       "delete_widget",
       "execute_query",
       "get_dashboard",
@@ -72,6 +73,7 @@ describe("MCP Server E2E", () => {
       "publish_dashboard",
       "update_dashboard",
       "update_query",
+      "update_visualization",
       "update_widget",
     ]);
   });
@@ -209,6 +211,29 @@ describe("MCP Server E2E", () => {
       const text = (result.content as Array<{ type: string; text: string }>)[0].text;
       expect(text).toContain("Visualization created successfully");
       expect(text).toContain("ID: 5");
+    });
+  });
+
+  describe("update_visualization", () => {
+    it("should update a visualization", async () => {
+      const result = await mcpClient.callTool({
+        name: "update_visualization",
+        arguments: { visualization_id: 5, name: "Updated Chart" },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("Visualization updated successfully");
+      expect(text).toContain("Updated Chart");
+    });
+  });
+
+  describe("delete_visualization", () => {
+    it("should delete a visualization", async () => {
+      const result = await mcpClient.callTool({
+        name: "delete_visualization",
+        arguments: { visualization_id: 5 },
+      });
+      const text = (result.content as Array<{ type: string; text: string }>)[0].text;
+      expect(text).toContain("deleted successfully");
     });
   });
 

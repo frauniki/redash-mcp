@@ -161,6 +161,26 @@ export class RedashClient {
     return this.request<RedashVisualization>("POST", "/api/visualizations", params);
   }
 
+  async updateVisualization(
+    visualizationId: number,
+    params: {
+      name?: string;
+      description?: string;
+      type?: string;
+      options?: Record<string, unknown>;
+    },
+  ): Promise<RedashVisualization> {
+    return this.request<RedashVisualization>(
+      "POST",
+      `/api/visualizations/${visualizationId}`,
+      params,
+    );
+  }
+
+  async deleteVisualization(visualizationId: number): Promise<void> {
+    await this.request<void>("DELETE", `/api/visualizations/${visualizationId}`);
+  }
+
   async createDashboard(name: string): Promise<RedashDashboard> {
     return this.request<RedashDashboard>("POST", "/api/dashboards", { name });
   }

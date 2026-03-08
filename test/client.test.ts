@@ -130,6 +130,20 @@ describe("RedashClient", () => {
     });
   });
 
+  describe("updateVisualization", () => {
+    it("should update a visualization", async () => {
+      const result = await client.updateVisualization(5, { name: "Updated" });
+      expect(result.id).toBe(5);
+      expect(result.name).toBe("Updated");
+    });
+  });
+
+  describe("deleteVisualization", () => {
+    it("should delete a visualization", async () => {
+      await expect(client.deleteVisualization(5)).resolves.toBeUndefined();
+    });
+  });
+
   describe("createDashboard", () => {
     it("should create a dashboard", async () => {
       const result = await client.createDashboard("My Dashboard");

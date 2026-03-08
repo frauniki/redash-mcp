@@ -237,6 +237,25 @@ export function createMockRedashServer(): {
         });
       }
 
+      const vizIdMatch = path.match(/^\/api\/visualizations\/(\d+)$/);
+      if (vizIdMatch) {
+        const id = parseInt(vizIdMatch[1]);
+        if (method === "POST") {
+          return respond(200, {
+            id,
+            type: parsedBody.type ?? "TABLE",
+            name: parsedBody.name ?? "Table",
+            description: parsedBody.description ?? "",
+            options: parsedBody.options ?? {},
+            created_at: "2024-01-01T00:00:00Z",
+            updated_at: "2024-01-01T00:00:00Z",
+          });
+        }
+        if (method === "DELETE") {
+          return respond(200, null);
+        }
+      }
+
       if (method === "POST" && path === "/api/dashboards") {
         return respond(200, {
           id: 3,
