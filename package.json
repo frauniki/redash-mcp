@@ -27,7 +27,7 @@
     "type": "git",
     "url": "https://github.com/frauniki/redash-mcp"
   },
-  "author": "",
+  "author": "frauniki <frauniki@sinoa.jp>",
   "license": "ISC",
   "publishConfig": {
     "access": "public",
