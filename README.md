@@ -42,7 +42,11 @@ REDASH_URL=https://redash.example.com REDASH_API_KEY=your-api-key npx @frauniki/
 
 ### Claude Code
 
-Add to `~/.claude.json`:
+```bash
+claude mcp add redash -e REDASH_URL=https://redash.example.com -e REDASH_API_KEY=your-api-key -- npx @frauniki/redash-mcp
+```
+
+Or add to `~/.claude.json` manually:
 
 ```json
 {
